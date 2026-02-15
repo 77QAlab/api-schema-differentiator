@@ -34,12 +34,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR_USERNAME/schema-sentinel.git"
+    "url": "git+https://github.com/77QAlab/schema-sentinel.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/schema-sentinel/issues"
+    "url": "https://github.com/77QAlab/schema-sentinel/issues"
   },
-  "homepage": "https://github.com/YOUR_USERNAME/schema-sentinel#readme",
+  "homepage": "https://github.com/77QAlab/schema-sentinel#readme",
   "publishConfig": {
     "access": "public"
   },
