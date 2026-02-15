@@ -1,0 +1,10 @@
+{
+  "id": 123,
+  "name": "Alice",
+  "role": "admin",
+  "tags": ["admin", "active"],
+  "meta": {
+    "created": "2024-01-01"
+  }
+}
+

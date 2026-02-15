@@ -1,0 +1,22 @@
+# Source (published package only needs dist/)
+src/
+test/
+integrations/
+
+# Config files
+tsconfig.json
+tsconfig.build.json
+jest.config.js
+.eslintrc*
+.prettierrc*
+
+# Dev files
+.github/
+coverage/
+node_modules/
+*.log
+.tmp/
+
+# Misc
+api-schema-drift-detector-plan.md
+

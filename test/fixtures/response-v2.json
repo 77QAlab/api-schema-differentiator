@@ -1,0 +1,11 @@
+{
+  "id": "123",
+  "name": "Alice",
+  "roles": ["admin"],
+  "tags": ["admin", "active"],
+  "meta": {
+    "created": "2024-01-01"
+  },
+  "updated_at": "2024-06-15"
+}
+
