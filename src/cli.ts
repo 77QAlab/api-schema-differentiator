@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * schema-sentinel CLI
+ * api-schema-differentiator CLI
  *
  * Commands:
  *   snapshot  - Take a schema snapshot from a response file or URL
@@ -25,7 +25,7 @@ import { ReportFormat, DriftReport } from './core/types';
 const program = new Command();
 
 program
-  .name('schema-sentinel')
+  .name('api-schema-differentiator')
   .description('Know when your APIs change before your users do.')
   .version('1.0.0');
 

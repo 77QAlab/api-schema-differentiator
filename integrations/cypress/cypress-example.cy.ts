@@ -1,10 +1,10 @@
 /**
- * schema-sentinel + Cypress Example
+ * api-schema-differentiator + Cypress Example
  *
  * For Cypress, use the CLI approach via cy.exec() since Cypress
  * runs in the browser and can't import Node modules directly.
  *
- * Install:  npm install schema-sentinel
+ * Install:  npm install api-schema-differentiator
  * Run:      npx cypress run
  */
 
@@ -15,9 +15,9 @@ describe('API Schema Drift Tests', () => {
       const fileName = `tmp-response-${Date.now()}.json`;
       cy.writeFile(`cypress/fixtures/${fileName}`, response.body);
 
-      // Run schema-sentinel CLI
+      // Run api-schema-differentiator CLI
       cy.exec(
-        `npx schema-sentinel check -k "GET /api/v2/users/:id" -d cypress/fixtures/${fileName} -s ./schemas --fail-on breaking`,
+        `npx api-schema-differentiator check -k "GET /api/v2/users/:id" -d cypress/fixtures/${fileName} -s ./schemas --fail-on breaking`,
         { failOnNonZeroExit: true }
       );
 
@@ -32,7 +32,7 @@ describe('API Schema Drift Tests', () => {
       cy.writeFile(`cypress/fixtures/${fileName}`, response.body);
 
       cy.exec(
-        `npx schema-sentinel check -k "GET /api/v2/products" -d cypress/fixtures/${fileName} -s ./schemas --fail-on breaking`,
+        `npx api-schema-differentiator check -k "GET /api/v2/products" -d cypress/fixtures/${fileName} -s ./schemas --fail-on breaking`,
         { failOnNonZeroExit: true }
       );
 

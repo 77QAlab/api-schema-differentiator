@@ -1,12 +1,12 @@
 /**
- * schema-sentinel + Mocha / Chai Example
+ * api-schema-differentiator + Mocha / Chai Example
  *
- * Install:  npm install schema-sentinel mocha chai
+ * Install:  npm install api-schema-differentiator mocha chai
  * Run:      npx mocha schema-drift.test.ts
  */
 
 import { expect } from 'chai';
-import { SchemaGuard } from 'schema-sentinel';
+import { SchemaGuard } from 'api-schema-differentiator';
 
 const guard = new SchemaGuard({ store: './schemas' });
 

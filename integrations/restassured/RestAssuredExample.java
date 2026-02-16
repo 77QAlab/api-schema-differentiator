@@ -1,12 +1,12 @@
 /**
- * schema-sentinel + REST Assured (Java) Example
+ * api-schema-differentiator + REST Assured (Java) Example
  *
- * Use schema-sentinel CLI from Java via ProcessBuilder.
+ * Use api-schema-differentiator CLI from Java via ProcessBuilder.
  * Works with JUnit, TestNG, or any Java test framework.
  *
  * Prerequisites:
  *   - Node.js installed on the machine
- *   - npm install -g schema-sentinel (or local in project)
+ *   - npm install -g api-schema-differentiator (or local in project)
  */
 
 import io.restassured.RestAssured;
@@ -52,7 +52,7 @@ public class RestAssuredExample {
     }
 
     /**
-     * Helper: Run schema-sentinel CLI to check for drift.
+     * Helper: Run api-schema-differentiator CLI to check for drift.
      * Returns 0 if no breaking drift, 1 if drift detected.
      */
     private int checkSchemaDrift(String key, String responseBody) throws Exception {
@@ -64,13 +64,13 @@ public class RestAssuredExample {
 
         try {
             ProcessBuilder pb = new ProcessBuilder(
-                "npx", "schema-sentinel", "check",
+                "npx", "api-schema-differentiator", "check",
                 "-k", key,
                 "-d", tmpFile.getAbsolutePath(),
                 "-s", "./schemas",
                 "--fail-on", "breaking"
             );
-            pb.inheritIO(); // Print schema-sentinel output to test console
+            pb.inheritIO(); // Print api-schema-differentiator output to test console
             Process process = pb.start();
             return process.waitFor();
         } finally {

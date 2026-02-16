@@ -1,4 +1,4 @@
-# Integrating schema-sentinel with Karate Framework
+# Integrating api-schema-differentiator with Karate Framework
 
 This guide shows how to add **automatic API schema drift detection** to your existing Karate test suite. Your Gherkin feature files keep working exactly as before — you just add one or two lines per scenario to check for schema drift.
 
@@ -6,20 +6,20 @@ This guide shows how to add **automatic API schema drift detection** to your exi
 
 ## Setup (One-Time, ~5 minutes)
 
-### Step 1: Install Node.js & schema-sentinel
+### Step 1: Install Node.js & api-schema-differentiator
 
-schema-sentinel is a Node.js CLI tool. Install it alongside your Karate project:
+api-schema-differentiator is a Node.js CLI tool. Install it alongside your Karate project:
 
 ```bash
 # In your Karate project root
 npm init -y
-npm install schema-sentinel
+npm install api-schema-differentiator
 ```
 
-Or, if you cloned schema-sentinel separately:
+Or, if you cloned api-schema-differentiator separately:
 
 ```bash
-cd schema-sentinel
+cd api-schema-differentiator
 npm install
 npm run build
 ```
@@ -27,7 +27,7 @@ npm run build
 ### Step 2: Verify it works
 
 ```bash
-npx schema-sentinel --version
+npx api-schema-differentiator --version
 ```
 
 ### Step 3: Create a schemas directory
@@ -59,7 +59,7 @@ function fn() {
     writer.write(JSON.stringify(responseBody));
     writer.close();
 
-    var exitCode = karate.exec('npx schema-sentinel check'
+    var exitCode = karate.exec('npx api-schema-differentiator check'
       + ' -k "' + key + '"'
       + ' -d "' + tmpFile.getAbsolutePath() + '"'
       + ' -s ' + config.schemaStore
@@ -78,7 +78,7 @@ function fn() {
     writer.write(JSON.stringify(responseBody));
     writer.close();
 
-    var exitCode = karate.exec('npx schema-sentinel snapshot'
+    var exitCode = karate.exec('npx api-schema-differentiator snapshot'
       + ' -k "' + key + '"'
       + ' -d "' + tmpFile.getAbsolutePath() + '"'
       + ' -s ' + config.schemaStore);
@@ -266,7 +266,7 @@ jobs:
         with:
           node-version: '20'
 
-      # Install schema-sentinel
+      # Install api-schema-differentiator
       - run: npm install
 
       # Run Karate tests (schema checks happen inside the tests)
@@ -306,7 +306,7 @@ test.dependsOn installSchemaSentinel
                                              │
                                              ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│  schema-sentinel CLI                                             │
+│  api-schema-differentiator CLI                                             │
 │                                                                  │
 │  1. Reads the response JSON                                      │
 │  2. Infers the schema (types, formats, nullable, nesting)        │
@@ -326,10 +326,10 @@ test.dependsOn installSchemaSentinel
 ## FAQ
 
 **Q: Do I need to write JSON schemas manually?**
-No. schema-sentinel auto-infers the schema from the first response it sees.
+No. api-schema-differentiator auto-infers the schema from the first response it sees.
 
 **Q: What if a legitimate API change happens?**
-Re-run the baseline: `npx schema-sentinel snapshot -k "GET /api/users" -d new-response.json -s ./schemas`
+Re-run the baseline: `npx api-schema-differentiator snapshot -k "GET /api/users" -d new-response.json -s ./schemas`
 Or run your `@baseline` tagged scenarios.
 
 **Q: Does this replace my existing Karate assertions?**

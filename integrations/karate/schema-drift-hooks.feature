@@ -19,8 +19,8 @@ Feature: Schema Drift Detection with Karate Hooks
       writer.write(JSON.stringify(responseBody));
       writer.close();
 
-      // Run schema-sentinel
-      var cmd = 'node schema-sentinel/dist/cli.js check'
+      // Run api-schema-differentiator
+      var cmd = 'node api-schema-differentiator/dist/cli.js check'
         + ' -k "' + key + '"'
         + ' -d "' + tmpFile.getAbsolutePath() + '"'
         + ' -s ' + schemaStore

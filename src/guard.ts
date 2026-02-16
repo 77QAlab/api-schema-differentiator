@@ -1,7 +1,7 @@
 /**
  * SchemaGuard — Main API
  *
- * The primary entry point for schema-sentinel. Provides a simple API for:
+ * The primary entry point for api-schema-differentiator. Provides a simple API for:
  * - Checking API responses for schema drift
  * - Snapshotting schemas
  * - Comparing schemas

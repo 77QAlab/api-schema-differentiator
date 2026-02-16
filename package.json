@@ -1,11 +1,11 @@
 {
-  "name": "schema-sentinel",
+  "name": "api-schema-differentiator",
   "version": "1.0.0",
   "description": "Know when your APIs change before your users do. Automatic API schema drift detection.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "schema-sentinel": "./dist/cli.js"
+    "api-schema-differentiator": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -34,12 +34,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/77QAlab/schema-sentinel.git"
+    "url": "git+https://github.com/77QAlab/api-schema-differentiator.git"
   },
   "bugs": {
-    "url": "https://github.com/77QAlab/schema-sentinel/issues"
+    "url": "https://github.com/77QAlab/api-schema-differentiator/issues"
   },
-  "homepage": "https://github.com/77QAlab/schema-sentinel#readme",
+  "homepage": "https://github.com/77QAlab/api-schema-differentiator#readme",
   "publishConfig": {
     "access": "public"
   },

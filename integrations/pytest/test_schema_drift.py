@@ -1,10 +1,10 @@
 """
-schema-sentinel + Python (pytest / requests) Example
+api-schema-differentiator + Python (pytest / requests) Example
 
-Since schema-sentinel is a Node.js tool, use the CLI via subprocess.
+Since api-schema-differentiator is a Node.js tool, use the CLI via subprocess.
 Or wait for the native Python port (coming soon).
 
-Install:  npm install -g schema-sentinel
+Install:  npm install -g api-schema-differentiator
           pip install requests pytest
 Run:      pytest test_schema_drift.py -v
 """
@@ -19,7 +19,7 @@ import pytest
 
 def check_schema_drift(key: str, response_data: dict, store: str = "./schemas", fail_on: str = "breaking") -> dict:
     """
-    Run schema-sentinel CLI and return the parsed drift report.
+    Run api-schema-differentiator CLI and return the parsed drift report.
     """
     # Write response to a temp file
     with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
@@ -29,7 +29,7 @@ def check_schema_drift(key: str, response_data: dict, store: str = "./schemas", 
     try:
         result = subprocess.run(
             [
-                "npx", "schema-sentinel", "check",
+                "npx", "api-schema-differentiator", "check",
                 "-k", key,
                 "-d", tmp_path,
                 "-s", store,

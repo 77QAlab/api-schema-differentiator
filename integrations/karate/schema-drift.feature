@@ -1,11 +1,11 @@
 @schema-drift
 Feature: API Schema Drift Detection
   Verify that API response schemas have not changed unexpectedly.
-  Uses schema-sentinel to auto-detect breaking changes, type changes,
+  Uses api-schema-differentiator to auto-detect breaking changes, type changes,
   missing fields, and other drift in API responses.
 
   Background:
-    # Path to the schema-sentinel Karate helper
+    # Path to the api-schema-differentiator Karate helper
     * def SchemaSentinel = Java.type('com.intuit.karate.FileUtils')
     # Alternatively, use karate.exec() to call the CLI directly
     # Or use karate.call() with JavaScript files
@@ -21,8 +21,8 @@ Feature: API Schema Drift Detection
     # Save response to a temp file
     * def responseFile = 'target/responses/users-response.json'
     * def writeResult = karate.write(response, responseFile)
-    # Run schema-sentinel check via CLI
-    * def result = karate.exec('node schema-sentinel/dist/cli.js check -k "GET /api/v2/users/:id" -d ' + responseFile + ' -s ./schemas --fail-on breaking -f json')
+    # Run api-schema-differentiator check via CLI
+    * def result = karate.exec('node api-schema-differentiator/dist/cli.js check -k "GET /api/v2/users/:id" -d ' + responseFile + ' -s ./schemas --fail-on breaking -f json')
     # Assert no breaking changes (exit code 0)
     * assert result == 0
 
@@ -32,7 +32,7 @@ Feature: API Schema Drift Detection
     Then status 200
     * def responseFile = 'target/responses/orders-response.json'
     * def writeResult = karate.write(response, responseFile)
-    * def result = karate.exec('node schema-sentinel/dist/cli.js check -k "GET /api/v2/orders" -d ' + responseFile + ' -s ./schemas --fail-on breaking -f json')
+    * def result = karate.exec('node api-schema-differentiator/dist/cli.js check -k "GET /api/v2/orders" -d ' + responseFile + ' -s ./schemas --fail-on breaking -f json')
     * assert result == 0
 
   # ============================================================
@@ -44,7 +44,7 @@ Feature: API Schema Drift Detection
     When method get
     Then status 200
     # Call the JS helper which returns a structured result
-    * def driftCheck = karate.call('classpath:schema-sentinel-karate.js')
+    * def driftCheck = karate.call('classpath:api-schema-differentiator-karate.js')
     * def result = driftCheck.checkDrift('GET /api/v2/users/:id', response, { store: './schemas' })
     # Assert no breaking changes
     * match result.hasBreakingChanges == false
@@ -62,7 +62,7 @@ Feature: API Schema Drift Detection
     Then status 200
     * def responseFile = 'target/responses/users-baseline.json'
     * def writeResult = karate.write(response, responseFile)
-    * def result = karate.exec('node schema-sentinel/dist/cli.js snapshot -k "GET /api/v2/users/:id" -d ' + responseFile + ' -s ./schemas')
+    * def result = karate.exec('node api-schema-differentiator/dist/cli.js snapshot -k "GET /api/v2/users/:id" -d ' + responseFile + ' -s ./schemas')
     * karate.log('Baseline snapshot taken')
 
   Scenario: Verify schema against baseline
@@ -71,6 +71,6 @@ Feature: API Schema Drift Detection
     Then status 200
     * def responseFile = 'target/responses/users-current.json'
     * def writeResult = karate.write(response, responseFile)
-    * def result = karate.exec('node schema-sentinel/dist/cli.js check -k "GET /api/v2/users/:id" -d ' + responseFile + ' -s ./schemas --fail-on breaking')
+    * def result = karate.exec('node api-schema-differentiator/dist/cli.js check -k "GET /api/v2/users/:id" -d ' + responseFile + ' -s ./schemas --fail-on breaking')
     * assert result == 0
 

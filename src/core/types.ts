@@ -1,5 +1,5 @@
 /**
- * Canonical schema type definitions for schema-sentinel.
+ * Canonical schema type definitions for api-schema-differentiator.
  * These types represent the internal schema format used across the tool.
  */
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ──────────────────────────────────────────────────────────────
-# OPTION 2: Newman (Postman CLI) + schema-sentinel
+# OPTION 2: Newman (Postman CLI) + api-schema-differentiator
 # Run Postman collections, save responses, check for drift.
 # ──────────────────────────────────────────────────────────────
 
@@ -22,7 +22,7 @@ for endpoint in $ENDPOINTS; do
     newman-results.json > "tmp-response.json"
   
   # Check for schema drift
-  npx schema-sentinel check \
+  npx api-schema-differentiator check \
     -k "$endpoint" \
     -d tmp-response.json \
     -s ./schemas \

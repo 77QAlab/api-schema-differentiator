@@ -1,12 +1,12 @@
 /**
- * schema-sentinel + Playwright Example
+ * api-schema-differentiator + Playwright Example
  *
- * Install:  npm install schema-sentinel @playwright/test
+ * Install:  npm install api-schema-differentiator @playwright/test
  * Run:      npx playwright test
  */
 
 import { test, expect } from '@playwright/test';
-import { SchemaGuard } from 'schema-sentinel';
+import { SchemaGuard } from 'api-schema-differentiator';
 
 const guard = new SchemaGuard({ store: './schemas' });
 

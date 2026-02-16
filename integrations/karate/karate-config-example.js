@@ -1,5 +1,5 @@
 /**
- * Example karate-config.js showing how to set up schema-sentinel
+ * Example karate-config.js showing how to set up api-schema-differentiator
  * globally so it's available in all feature files.
  *
  * Place this in your Karate project root as karate-config.js
@@ -13,7 +13,7 @@ function fn() {
 
   // ─── Schema Sentinel Configuration ──────────────────────────────
   config.schemaStore = './schemas';
-  config.schemaSentinelCli = 'node schema-sentinel/dist/cli.js';
+  config.schemaSentinelCli = 'node api-schema-differentiator/dist/cli.js';
 
   /**
    * Global helper: Check API response for schema drift.
@@ -32,7 +32,7 @@ function fn() {
     writer.write(JSON.stringify(responseBody));
     writer.close();
 
-    // Run schema-sentinel CLI
+    // Run api-schema-differentiator CLI
     var cmd = config.schemaSentinelCli
       + ' check'
       + ' -k "' + key + '"'

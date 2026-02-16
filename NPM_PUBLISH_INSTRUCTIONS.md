@@ -31,7 +31,7 @@ If you prefer not to use 2FA, you can create a token:
 2. **Click "Generate New Token"** → Choose **"Granular"**
 
 3. **Configure the token:**
-   - **Name:** `schema-sentinel-publish`
+      - **Name:** `api-schema-differentiator-publish`
    - **Expiration:** Choose your preference
    - **Type:** `Automation`
    - **Permissions:** 
@@ -51,10 +51,10 @@ If you prefer not to use 2FA, you can create a token:
 Once published, anyone can install your package:
 
 ```bash
-npm install schema-sentinel
+npm install api-schema-differentiator
 ```
 
-Your package will be live at: **https://www.npmjs.com/package/schema-sentinel**
+Your package will be live at: **https://www.npmjs.com/package/api-schema-differentiator**
 
 ---
 

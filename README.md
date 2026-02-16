@@ -1,8 +1,8 @@
-# 🛡️ schema-sentinel
+# 🛡️ api-schema-differentiator
 
 **Know when your APIs change before your users do.**
 
-Schema Sentinel is a zero-config API schema drift detector. Point it at any API response — it automatically learns the schema, snapshots it, and alerts you when things change. No OpenAPI spec required. No manual schema writing. It just works.
+API Schema Differentiator is a zero-config API schema drift detector. Point it at any API response — it automatically learns the schema, snapshots it, and alerts you when things change. No OpenAPI spec required. No manual schema writing. It just works.
 
 ---
 
@@ -42,20 +42,20 @@ The backend team deploys a refactor. Now it returns:
 
 Three things broke silently: `id` changed from number to string, `role` was renamed to `roles`, and its type changed from string to array. Nobody noticed until customers filed support tickets.
 
-**Schema Sentinel catches that automatically.**
+**API Schema Differentiator catches that automatically.**
 
 ---
 
 ## Installation
 
 ```bash
-npm install schema-sentinel
+npm install api-schema-differentiator
 ```
 
 Or install globally to use the CLI anywhere:
 
 ```bash
-npm install -g schema-sentinel
+npm install -g api-schema-differentiator
 ```
 
 ---
@@ -65,7 +65,7 @@ npm install -g schema-sentinel
 ### Option A: As a Library (in your tests)
 
 ```typescript
-import { SchemaGuard } from 'schema-sentinel';
+import { SchemaGuard } from 'api-schema-differentiator';
 
 const guard = new SchemaGuard({ store: './schemas' });
 
@@ -87,10 +87,10 @@ if (report.hasBreakingChanges) {
 
 ```bash
 # Step 1: Save a baseline schema from a response file
-schema-sentinel snapshot --key "GET /api/users" --data response.json
+api-schema-differentiator snapshot --key "GET /api/users" --data response.json
 
 # Step 2: Later, check a new response against the baseline
-schema-sentinel check --key "GET /api/users" --data new-response.json
+api-schema-differentiator check --key "GET /api/users" --data new-response.json
 ```
 
 Output:
@@ -114,7 +114,7 @@ Compatibility Score: 68%
 ### Basic Check
 
 ```typescript
-import { SchemaGuard } from 'schema-sentinel';
+import { SchemaGuard } from 'api-schema-differentiator';
 
 // Create a guard with a local store directory
 const guard = new SchemaGuard({ store: './schemas' });
@@ -208,7 +208,7 @@ fs.writeFileSync('report.html', guard.format(report, 'html'));
 Use the inference and diff engines directly:
 
 ```typescript
-import { inferSchema, diffSchemas, mergeSchemas, formatReport } from 'schema-sentinel';
+import { inferSchema, diffSchemas, mergeSchemas, formatReport } from 'api-schema-differentiator';
 
 // Infer a schema from any data
 const schema = inferSchema({ id: 1, name: 'Alice', tags: ['admin'] });
@@ -229,26 +229,26 @@ const merged = mergeSchemas(schema1, schema2);
 
 ```bash
 # From a file
-schema-sentinel snapshot --key "GET /api/users" --data response.json
+api-schema-differentiator snapshot --key "GET /api/users" --data response.json
 
 # From a specific store directory
-schema-sentinel snapshot --key "GET /api/users" --data response.json --store ./my-schemas
+api-schema-differentiator snapshot --key "GET /api/users" --data response.json --store ./my-schemas
 ```
 
 ### 2. `check` — Detect Drift Against Baseline
 
 ```bash
 # Check and print to console
-schema-sentinel check --key "GET /api/users" --data new-response.json
+api-schema-differentiator check --key "GET /api/users" --data new-response.json
 
 # Check with JSON output
-schema-sentinel check --key "GET /api/users" --data new-response.json --format json
+api-schema-differentiator check --key "GET /api/users" --data new-response.json --format json
 
 # Check and write report to file
-schema-sentinel check --key "GET /api/users" --data new-response.json --format html --output report.html
+api-schema-differentiator check --key "GET /api/users" --data new-response.json --format html --output report.html
 
 # Fail on warnings (not just breaking)
-schema-sentinel check --key "GET /api/users" --data new-response.json --fail-on warning
+api-schema-differentiator check --key "GET /api/users" --data new-response.json --fail-on warning
 ```
 
 **Exit codes:**
@@ -259,19 +259,19 @@ schema-sentinel check --key "GET /api/users" --data new-response.json --fail-on 
 
 ```bash
 # Compare two response files
-schema-sentinel diff --before old-response.json --after new-response.json
+api-schema-differentiator diff --before old-response.json --after new-response.json
 
 # Compare with markdown output
-schema-sentinel diff --before v1.json --after v2.json --format markdown
+api-schema-differentiator diff --before v1.json --after v2.json --format markdown
 
 # Compare two stored versions
-schema-sentinel diff --key "GET /api/users" --v1 1 --v2 3
+api-schema-differentiator diff --key "GET /api/users" --v1 1 --v2 3
 ```
 
 ### 4. `list` — See All Monitored Endpoints
 
 ```bash
-schema-sentinel list --store ./schemas
+api-schema-differentiator list --store ./schemas
 ```
 
 Output:
@@ -295,7 +295,7 @@ Output:
 ### 5. `history` — View Version Timeline
 
 ```bash
-schema-sentinel history --key "GET /api/v2/users" --store ./schemas
+api-schema-differentiator history --key "GET /api/v2/users" --store ./schemas
 ```
 
 Output:
@@ -312,16 +312,16 @@ Output:
 
 ```bash
 # Poll every hour
-schema-sentinel watch --url "https://api.example.com/v2/users/1" --interval 1h
+api-schema-differentiator watch --url "https://api.example.com/v2/users/1" --interval 1h
 
 # With auth headers
-schema-sentinel watch \
+api-schema-differentiator watch \
   --url "https://api.stripe.com/v1/charges" \
   --header "Authorization: Bearer sk_test_..." \
   --interval 6h
 
 # With Slack webhook alerts
-schema-sentinel watch \
+api-schema-differentiator watch \
   --url "https://api.example.com/v2/users" \
   --interval 30m \
   --alert-webhook "https://hooks.slack.com/services/T.../B.../xxx"
@@ -334,7 +334,7 @@ schema-sentinel watch \
 ### Jest
 
 ```typescript
-import { SchemaGuard } from 'schema-sentinel';
+import { SchemaGuard } from 'api-schema-differentiator';
 
 const guard = new SchemaGuard({ store: './api-schemas' });
 
@@ -376,7 +376,7 @@ def test_users_api_schema():
 ### Mocha / Chai
 
 ```typescript
-import { SchemaGuard } from 'schema-sentinel';
+import { SchemaGuard } from 'api-schema-differentiator';
 import { expect } from 'chai';
 
 const guard = new SchemaGuard({ store: './api-schemas' });
@@ -421,16 +421,16 @@ jobs:
       - run: npm test
 
       # Check for schema drift
-      - run: npx schema-sentinel check --key "GET /api/users" --data test/responses/users.json --fail-on breaking
+      - run: npx api-schema-differentiator check --key "GET /api/users" --data test/responses/users.json --fail-on breaking
 
       # Or check multiple endpoints
       - run: |
-          npx schema-sentinel check -k "GET /api/users" -d test/responses/users.json --fail-on breaking
-          npx schema-sentinel check -k "GET /api/orders" -d test/responses/orders.json --fail-on breaking
-          npx schema-sentinel check -k "GET /api/products" -d test/responses/products.json --fail-on warning
+          npx api-schema-differentiator check -k "GET /api/users" -d test/responses/users.json --fail-on breaking
+          npx api-schema-differentiator check -k "GET /api/orders" -d test/responses/orders.json --fail-on breaking
+          npx api-schema-differentiator check -k "GET /api/products" -d test/responses/products.json --fail-on warning
 
       # Generate a PR comment with the report
-      - run: npx schema-sentinel diff --before schemas/users/latest.json --after test/responses/users.json --format markdown > drift-report.md
+      - run: npx api-schema-differentiator diff --before schemas/users/latest.json --after test/responses/users.json --format markdown > drift-report.md
 ```
 
 ### GitLab CI
@@ -439,8 +439,8 @@ jobs:
 schema-drift-check:
   stage: test
   script:
-    - npm install schema-sentinel
-    - npx schema-sentinel check -k "GET /api/users" -d responses/users.json --fail-on breaking
+    - npm install api-schema-differentiator
+    - npx api-schema-differentiator check -k "GET /api/users" -d responses/users.json --fail-on breaking
   artifacts:
     when: on_failure
     paths:
@@ -451,7 +451,7 @@ schema-drift-check:
 
 ```bash
 # Exit code 0 = no breaking drift, 1 = breaking drift detected
-schema-sentinel check \
+api-schema-differentiator check \
   --key "GET /api/users" \
   --data ./test-responses/users.json \
   --store ./schemas \
@@ -471,22 +471,22 @@ Monitor third-party or internal APIs you don't control. Schema Sentinel polls at
 
 ```bash
 # Basic: poll every hour
-schema-sentinel watch --url "https://api.example.com/v2/users/1" --interval 1h
+api-schema-differentiator watch --url "https://api.example.com/v2/users/1" --interval 1h
 
 # With authentication
-schema-sentinel watch \
+api-schema-differentiator watch \
   --url "https://api.stripe.com/v1/charges" \
   --header "Authorization: Bearer sk_test_abc123" \
   --interval 6h
 
 # With Slack notifications
-schema-sentinel watch \
+api-schema-differentiator watch \
   --url "https://partner-api.example.com/data" \
   --interval 30m \
   --alert-webhook "https://hooks.slack.com/services/T.../B.../xxx"
 
 # POST request with body
-schema-sentinel watch \
+api-schema-differentiator watch \
   --url "https://api.example.com/graphql" \
   --method POST \
   --header "Content-Type: application/json" \
@@ -630,7 +630,7 @@ List all schema versions for a key.
 ## CLI Reference
 
 ```
-schema-sentinel <command> [options]
+api-schema-differentiator <command> [options]
 
 Commands:
   snapshot   Save a schema snapshot from a response file
@@ -674,7 +674,7 @@ schemas/
 Implement the `SchemaStore` interface for custom storage (database, S3, etc.):
 
 ```typescript
-import { SchemaStore, SchemaSnapshot } from 'schema-sentinel';
+import { SchemaStore, SchemaSnapshot } from 'api-schema-differentiator';
 
 class MyCustomStore implements SchemaStore {
   async save(snapshot: SchemaSnapshot): Promise<void> { /* ... */ }

@@ -1,10 +1,10 @@
 /**
- * schema-sentinel + Postman / Newman Example
+ * api-schema-differentiator + Postman / Newman Example
  *
  * Use this in Postman's "Tests" tab (post-response script).
- * It saves responses to files that schema-sentinel can check.
+ * It saves responses to files that api-schema-differentiator can check.
  *
- * For automated checking, use Newman (Postman CLI) + schema-sentinel
+ * For automated checking, use Newman (Postman CLI) + api-schema-differentiator
  * in your CI pipeline — see the shell script below.
  */
 

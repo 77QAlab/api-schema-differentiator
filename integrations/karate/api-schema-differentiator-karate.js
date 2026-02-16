@@ -1,12 +1,12 @@
 /**
- * schema-sentinel — Karate Framework Integration
+ * api-schema-differentiator — Karate Framework Integration
  *
  * This file is a callable JavaScript helper that Karate can invoke
  * via its built-in Java interop (karate.exec / karate.call).
  *
  * HOW IT WORKS:
  *   Karate runs API tests → captures JSON response →
- *   passes it to schema-sentinel CLI → gets drift report back.
+ *   passes it to api-schema-differentiator CLI → gets drift report back.
  *
  * USAGE IN KARATE:
  *   See the accompanying .feature files for examples.
@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Check an API response for schema drift using schema-sentinel CLI.
+ * Check an API response for schema drift using api-schema-differentiator CLI.
  *
  * @param {string} key        - Endpoint identifier (e.g. "GET /api/users")
  * @param {object|string} response - The API response body (JSON object or string)

@@ -1,12 +1,12 @@
 /**
- * schema-sentinel + Supertest (Express.js testing) Example
+ * api-schema-differentiator + Supertest (Express.js testing) Example
  *
- * Install:  npm install schema-sentinel supertest
+ * Install:  npm install api-schema-differentiator supertest
  * Run:      npx jest supertest-schema.test.ts
  */
 
 import request from 'supertest';
-import { SchemaGuard } from 'schema-sentinel';
+import { SchemaGuard } from 'api-schema-differentiator';
 import app from '../src/app'; // your Express app
 
 const guard = new SchemaGuard({ store: './schemas' });

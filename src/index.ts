@@ -1,11 +1,11 @@
 /**
- * schema-sentinel
+ * api-schema-differentiator
  *
  * Know when your APIs change before your users do.
  *
  * @example
  * ```typescript
- * import { SchemaGuard } from 'schema-sentinel';
+ * import { SchemaGuard } from 'api-schema-differentiator';
  *
  * const guard = new SchemaGuard({ store: './schemas' });
  *

@@ -1,11 +1,11 @@
 /**
- * schema-sentinel + Jest Example
+ * api-schema-differentiator + Jest Example
  *
- * Install:  npm install schema-sentinel
+ * Install:  npm install api-schema-differentiator
  * Run:      npx jest schema-drift.test.ts
  */
 
-import { SchemaGuard } from 'schema-sentinel';
+import { SchemaGuard } from 'api-schema-differentiator';
 
 const guard = new SchemaGuard({ store: './schemas' });
 
