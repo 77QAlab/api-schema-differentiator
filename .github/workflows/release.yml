@@ -40,12 +40,17 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Bump version
-        run: npm version ${{ inputs.version }} -m "release: v%s"
+        id: version
+        run: |
+          npm version ${{ inputs.version }} -m "release: v%s"
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       - name: Push tag
         run: git push origin main --tags
 
       - name: Publish to npm
+        if: secrets.NPM_TOKEN != ''
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
