@@ -50,7 +50,10 @@ jobs:
         run: git push origin main --tags
 
       - name: Publish to npm
-        if: secrets.NPM_TOKEN != ''
+        # Note: This step will fail if NPM_TOKEN secret is not configured.
+        # To enable automated npm publishing, add NPM_TOKEN secret in repo settings.
+        # For now, you can publish manually with: npm publish --access public
+        continue-on-error: true
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
