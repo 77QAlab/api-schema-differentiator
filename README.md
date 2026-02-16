@@ -360,6 +360,18 @@ describe('API Schema Tests', () => {
 });
 ```
 
+Generate an HTML pass/fail test report:
+
+```bash
+npm run test:html
+```
+
+The report is written to:
+
+```text
+test-reports/jest-report.html
+```
+
 ### pytest (Python-style pseudocode — same concept)
 
 ```python
@@ -693,4 +705,3 @@ const guard = new SchemaGuard({ store: new MyCustomStore() });
 ## License
 
 MIT
-
