@@ -138,6 +138,34 @@ function levenshtein(a: string, b: string): number {
   return dp[m][n];
 }
 
+// ─── Schema Complexity Calculation ────────────────────────────────────────
+
+/**
+ * Calculate the complexity of a schema (number of fields, nesting depth, etc.)
+ * Used for adaptive compatibility scoring.
+ */
+function calculateSchemaComplexity(schema: SchemaNode, depth: number = 0): number {
+  if (depth > 10) return 1; // Prevent infinite recursion
+
+  let complexity = 1; // Base complexity
+
+  if (schema.type === 'object' && schema.properties) {
+    const fieldCount = Object.keys(schema.properties).length;
+    complexity += fieldCount * 0.5; // Each field adds complexity
+
+    // Add complexity from nested objects
+    for (const prop of Object.values(schema.properties)) {
+      complexity += calculateSchemaComplexity(prop, depth + 1) * 0.3;
+    }
+  }
+
+  if (schema.type === 'array' && schema.items) {
+    complexity += calculateSchemaComplexity(schema.items, depth + 1) * 0.2;
+  }
+
+  return Math.max(1, complexity);
+}
+
 // ─── Main Diff ──────────────────────────────────────────────────────────────
 
 /**
@@ -360,29 +388,67 @@ export function diffSchemas(
 }
 
 /**
- * Calculate a backward compatibility score (0–100).
+ * Calculate a backward compatibility score (0–100) with adaptive penalties.
  *
- * - 100 = identical
- * - Deductions: breaking = -15, warning = -5, info = -1
- * - Floor at 0
+ * The score adapts based on:
+ * - Schema complexity (larger schemas get more lenient penalties)
+ * - Baseline structure (more fields = less impact per change)
+ * - Change type and severity
+ *
+ * @param changes - List of detected drift changes
+ * @param baselineSchema - Optional baseline schema for adaptive scoring
  */
-export function calculateCompatibilityScore(changes: DriftChange[]): number {
-  let score = 100;
+export function calculateCompatibilityScore(
+  changes: DriftChange[],
+  baselineSchema?: SchemaNode
+): number {
+  if (changes.length === 0) return 100;
 
-  for (const c of changes) {
-    switch (c.severity) {
-      case 'breaking':
-        score -= 15;
-        break;
-      case 'warning':
-        score -= 5;
-        break;
-      case 'info':
-        score -= 1;
-        break;
+  // Calculate baseline complexity if provided
+  let complexityFactor = 1;
+  if (baselineSchema) {
+    const complexity = calculateSchemaComplexity(baselineSchema);
+    // More complex schemas = more lenient scoring
+    // Simple schema (1-5 fields): factor = 1.0
+    // Medium schema (6-20 fields): factor = 0.8
+    // Large schema (21+ fields): factor = 0.6
+    if (complexity > 20) {
+      complexityFactor = 0.6;
+    } else if (complexity > 5) {
+      complexityFactor = 0.8;
     }
   }
 
-  return Math.max(0, score);
-}
+  let score = 100;
 
+  for (const c of changes) {
+    let penalty = 0;
+    switch (c.severity) {
+      case 'breaking':
+        // Base penalty: 15, but adapt based on complexity
+        penalty = 15 * complexityFactor;
+        break;
+      case 'warning':
+        // Base penalty: 5
+        penalty = 5 * complexityFactor;
+        break;
+      case 'info':
+        // Base penalty: 1
+        penalty = 1 * complexityFactor;
+        break;
+    }
+
+    // Additional penalty reduction for large schemas with many fields
+    // If baseline has 20+ fields, reduce penalty by 20%
+    if (baselineSchema && baselineSchema.type === 'object' && baselineSchema.properties) {
+      const fieldCount = Object.keys(baselineSchema.properties).length;
+      if (fieldCount > 20) {
+        penalty *= 0.8;
+      }
+    }
+
+    score -= penalty;
+  }
+
+  return Math.max(0, Math.round(score));
+}

@@ -78,7 +78,8 @@ export class SchemaGuard {
     // Compare schemas
     const allChanges = diffSchemas(existing.schema, currentSchema);
     const changes = this.filterBySeverity(allChanges);
-    const score = calculateCompatibilityScore(changes);
+    // Pass baseline schema for adaptive scoring
+    const score = calculateCompatibilityScore(changes, existing.schema);
 
     const report: DriftReport = {
       key,
